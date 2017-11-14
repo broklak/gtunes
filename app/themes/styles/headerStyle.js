@@ -5,14 +5,10 @@ export default StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#1ab667',
     paddingTop: 10,
-    paddingBottom: 10,
-    justifyContent: 'space-between'
+    paddingBottom: 10
   },
   drawerMenu: {
     backgroundColor: '#232c32'
-  },
-  icon: {
-  	color: '#1ab667'
   },
   menuToggle: {
     marginLeft: 10,
@@ -21,7 +17,8 @@ export default StyleSheet.create({
   header: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
+    marginLeft: 15
   },
   setting: {
     color: '#fff',

@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
-import DrawerMenu from './app/src/components/drawerMenuComponent';
 import SplashScreen from 'react-native-splash-screen';
+import { View, Text, Button } from 'react-native';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-// import rootReducer from './app/src/reducers/rootReducer';
-import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './app/src/reducers';
+import promise from 'redux-promise';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
+import Routes from './app/config/routes';
+import { menuOptions } from './app/themes/settings/menu';
 
-// const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__ });
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
-// function configureStore(initialState) {
-// 	const enhancer = compose(
-// 		applyMiddleware(
-// 			thunkMiddleware,
-// 			loggerMiddleware
-// 		)
-// 	)
-// 	return create(redu)
-// }
+const Stack = StackNavigator(Routes);
 
-export default class App extends Component<{}> {
+const GTunes = DrawerNavigator({
+  Home: { screen: Stack }
+}, menuOptions);
+
+export default class App extends Component {
   componentDidMount() {
     SplashScreen.hide();
   }
 
   render() {
     return (
-      	<DrawerMenu />
+      <Provider store={createStoreWithMiddleware(reducers)}>
+        <GTunes />
+      </Provider>
     );
   }
 }

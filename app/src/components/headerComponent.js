@@ -14,23 +14,13 @@ export default MenuToggle = ({ navigation }) => {
 				>
 				<Entypo
 		          name= 'menu'
-		          size={24}
+		          size={28}
 		        />
 				</Text>
 			</View>
 			<View>
 				<Text style={style.header}>
-					Gtunes
-				</Text>
-			</View>
-			<View>
-				<Text
-					style={style.setting}
-				>
-				<MaterialIcon
-		          name= 'settings'
-		          size={24}
-		        />
+					GTunes
 				</Text>
 			</View>
 		</View>

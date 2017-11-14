@@ -3,7 +3,10 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent'
+    backgroundColor: '#fff'
+  },
+  detailContainer: {
+    flex: 1
   },
   labelHeader: {
   	fontSize: 20,
@@ -15,13 +18,22 @@ export default StyleSheet.create({
   listContainer: {
   	paddingLeft: 15,
   	paddingRight: 15,
-  	marginBottom: 10,
+  	marginBottom: 20,
   	backgroundColor: '#fff'
   },
   image: {
   	alignItems: 'center',
   	height: 125,
   	width: '99%'
+  },
+  imageDetailContainer: {
+    height: '30%'
+  },
+  imageDetail: {
+    alignSelf: 'stretch',
+    flex: 1,
+    height: undefined,
+    width: undefined,
   },
   textGroup: {
   	marginLeft: 15,
@@ -34,7 +46,7 @@ export default StyleSheet.create({
   	marginTop: 5
   },
   dateGroup: {
-  	marginTop: 10,
+  	marginTop: 5,
   	flexDirection: 'row'
   },
   dateIcon : {

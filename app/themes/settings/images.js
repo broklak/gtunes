@@ -1,5 +1,5 @@
 const images = {
-	dummyNews: require('../images/dummy.jpg'),
+	noLogin: require('../images/no-login.png'),
 }
 
 export default images;
