@@ -7,6 +7,10 @@ import VideoScreen from '../src/screens/videoScreen';
 import ArtistDetailScreen from '../src/screens/artistDetailScreen';
 import MusicPlayerScreen from '../src/screens/musicPlayerScreen';
 import VideoPlayerScreen from '../src/screens/videoPlayerScreen';
+import PackageScreen from '../src/screens/packageScreen';
+import PaymentOptionsScreen from '../src/screens/paymentOptionsScreen';
+import PaymentSuccessScreen from '../src/screens/paymentSuccessScreen';
+import SmartfrenScreen from '../src/screens/telco/smartfrenPaymentScreen';
 
 const Routes = {
 	  News: {
@@ -35,7 +39,20 @@ const Routes = {
 	  },
 	  VideoPlayer: {
 	    screen: VideoPlayerScreen
-	  }
+	  },
+	  Package: {
+	    screen: PackageScreen
+	  },
+	  PaymentOptions: {
+	    screen: PaymentOptionsScreen
+	  },
+	  PaymentSuccess: {
+	    screen: PaymentSuccessScreen
+	  },
+	  Smartfren: {
+	    screen: SmartfrenScreen
+
+	  },
 }
 
 export default Routes;

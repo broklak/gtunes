@@ -29,8 +29,7 @@ class GenreScreen extends Component {
 	render() {
 		return (
 			<View style={style.container}>
-				<Header navigation={this.props.navigation} />
-				<Text style={style.labelHeader}>Genre</Text>
+				<Header navigation={this.props.navigation} title="Genre" />
 				<FlatList
 				    data={ this.props.genre.list }
 				    keyExtractor={item => item.genre_id}

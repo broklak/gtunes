@@ -6,6 +6,7 @@ import DetailArtistReducer from './detailArtistReducer';
 import DetailGenreReducer from './detailGenreReducer';
 import SongReducer from './songReducer';
 import VideoReducer from './videoReducer';
+import PaymentReducer from './paymentReducer';
 
 export default combineReducers({
 	news: NewsReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
 	detailGenre: DetailGenreReducer,
 	detailArtist: DetailArtistReducer,
 	song: SongReducer,
-	video: VideoReducer
+	video: VideoReducer,
+	payment: PaymentReducer,
 });

@@ -5,6 +5,7 @@ import style from '../../themes/styles/musicPlayerStyle';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Slider from 'react-native-slider';
 import { IMAGE_HOST_URL } from '../../config/settings';
+import _ from 'lodash';
 
 var listener = true;
 
@@ -18,12 +19,12 @@ class MusicPlayerScreen extends Component {
 		const { state } = this.props.navigation;
 
 		this.state = {
-			params: state.params,
+			songPlaying: state.params.current,
 			status: 1,
 			duration: 0,
-			currentTime: 0
+			currentTime: 0,
 		}
-		RNAudioStreamer.setUrl(encodeURI(this.state.params.musicUrl));
+		RNAudioStreamer.setUrl(encodeURI(`${IMAGE_HOST_URL}/${this.state.songPlaying.music_url}`));
 		RNAudioStreamer.play();
 	}
 
@@ -100,26 +101,44 @@ class MusicPlayerScreen extends Component {
 		this.setState({status: 1});
 	}
 
+	otherSong() {
+		const { state } = this.props.navigation;
+		let all = state.params.all;
+		let current = state.params.current;
+
+
+		if(_.size(all) == 1) {
+			alert('Semua lagu sudah dimainkan. Silahkan pilih artis / lain');
+		} else {
+			let shuff = _.shuffle(all);
+			let other = _.head(shuff);
+			RNAudioStreamer.setUrl(encodeURI(`${IMAGE_HOST_URL}/${other.music_url}`));
+			this.play();
+			this.setState({songPlaying: other});
+		}
+	}
+
 	render() {
 		return (
 			<View style={style.container}>
 				<View style={style.artistContainer}>
-					<Text style={style.artist}>{this.state.params.artistName}</Text>
+					<Text style={style.artist}>{this.state.songPlaying.artist_name}</Text>
 				</View>
 				<View style={style.imageContainer}>
 					<Image 
 						style={style.image}
-						source={{uri:`${IMAGE_HOST_URL}/${this.state.params.musicArt}`}}
+						source={{uri:`${IMAGE_HOST_URL}/${this.state.songPlaying.music_artwork}`}}
 					/>
 				</View>
 				<View style={style.detail}>
-					<Text style={style.title}>{this.state.params.musicTitle}</Text>
+					<Text style={style.title}>{this.state.songPlaying.music_title}</Text>
 				</View>
 				<View style={style.controlGroup}>
 					<Entypo
 						name= 'controller-jump-to-start'
 						size={18}
 						style={style.songIcon}
+						onPress={() => this.otherSong()}
 					/>
 
 					{this.renderPlayPause()}
@@ -128,6 +147,7 @@ class MusicPlayerScreen extends Component {
 						name= 'controller-next'
 						size={18}
 						style={style.songIcon}
+						onPress={() => this.otherSong()}
 					/>
 				</View>
 			</View>

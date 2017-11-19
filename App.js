@@ -8,6 +8,7 @@ import promise from 'redux-promise';
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import Routes from './app/config/routes';
 import { menuOptions } from './app/themes/settings/menu';
+import firebase from 'firebase';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -18,6 +19,17 @@ const GTunes = DrawerNavigator({
 }, menuOptions);
 
 export default class App extends Component {
+  componentWillMount() {
+    firebase,intitializeApp({
+      apiKey: "AIzaSyCwUAl7fYjoy5dtLFkeJuOgHlY4XwEFiCE",
+      authDomain: "gtunes-b03a3.firebaseapp.com",
+      databaseURL: "https://gtunes-b03a3.firebaseio.com",
+      projectId: "gtunes-b03a3",
+      storageBucket: "gtunes-b03a3.appspot.com",
+      messagingSenderId: "488634945750"
+    });
+  }
+
   componentDidMount() {
     SplashScreen.hide();
   }

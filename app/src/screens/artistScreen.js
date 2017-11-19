@@ -34,8 +34,7 @@ class ArtistScreen extends Component {
 	render() {
 		return (
 			<View style={style.container}>
-				<Header navigation={this.props.navigation} />
-				<Text style={style.labelHeader}>Artis</Text>
+				<Header navigation={this.props.navigation} title="Artis" />
 				<FlatList
 				    data={ this.props.artist }
 				    keyExtractor={item => item.artist_id}

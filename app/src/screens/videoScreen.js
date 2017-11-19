@@ -30,8 +30,7 @@ class VideoScreen extends Component {
 	render() {
 		return (
 			<View style={style.container}>
-				<Header navigation={this.props.navigation} />
-				<Text style={style.labelHeader}>Video Clip</Text>
+				<Header navigation={this.props.navigation} title="Video Clip" />
 				<FlatList
 				    data={ this.props.video }
 				    keyExtractor={item => item.video_clip_id}

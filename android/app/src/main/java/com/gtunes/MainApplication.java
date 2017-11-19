@@ -2,6 +2,7 @@ package com.gtunes;
 
 import android.app.Application;
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.brentvatne.react.ReactVideoPackage;
 import fm.indiecast.rnaudiostreamer.RNAudioStreamerPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
             new ReactVideoPackage(),
           new RNAudioStreamerPackage(),
           new SplashScreenReactPackage()

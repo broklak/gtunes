@@ -38,6 +38,14 @@ class CustomMenu extends Component {
 						<Entypo name= 'video' size={22} style={style.icon} />
 						<Text style={style.label} onPress={this.navigateToScreen('Video')}>Video</Text>
 					</View>
+					<View style={style.menuGroup}>
+						<Entypo name= 'shop' size={22} style={style.icon} />
+						<Text style={style.label} onPress={this.navigateToScreen('Package')}>Beli Paket</Text>
+					</View>
+					<View style={style.menuGroup}>
+						<Entypo name= 'shop' size={22} style={style.icon} />
+						<Text style={style.label} onPress={this.navigateToScreen('PaymentSuccess')}>Sukses</Text>
+					</View>
 				</View>
 			</View>
 		);

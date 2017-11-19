@@ -4,23 +4,24 @@ import Entypo from 'react-native-vector-icons/Entypo'; // 4.4.2
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'; // 4.4.2
 import style from '../../themes/styles/headerStyle';
 
-export default MenuToggle = ({ navigation }) => {
+export default MenuToggle = ({ navigation, title, type = "menu" }) => {
+	let iconLeft = (type == 'menu') ? 'menu' : 'arrow-left';
 	return (
 		<View style={style.container}>
 			<View>
 				<Text 
-					onPress={() => navigation.navigate('DrawerToggle')}
+					onPress={() => (type == 'menu') ? navigation.navigate('DrawerToggle') : navigation.goBack()}
 					style={style.menuToggle}
 				>
 				<Entypo
-		          name= 'menu'
+		          name= {iconLeft}
 		          size={28}
 		        />
 				</Text>
 			</View>
 			<View>
 				<Text style={style.header}>
-					GTunes
+					{title}
 				</Text>
 			</View>
 		</View>

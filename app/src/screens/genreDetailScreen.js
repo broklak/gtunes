@@ -18,15 +18,8 @@ class GenreDetail extends Component {
 		this.props.fetchDetailGenre(state.params.genre_id);
 	}
 
-	list(item) {
+	list(item, songs) {
 		const { navigate } = this.props.navigation;
-		let params = {
-			musicId: item.music_id,
-			artistName: item.artist_name,
-			musicArt: item.music_artwork,
-			musicTitle: item.music_title,
-			musicUrl: `${IMAGE_HOST_URL}/${item.music_url}`
-		}
 		return (
 			<View style={style.listContainer}>
 				<Entypo
@@ -35,7 +28,7 @@ class GenreDetail extends Component {
 					size={18}
 					style={style.songIcon}
 				/>
-				<Text onPress={() => navigate('MusicPlayer', params)}>{item.music_title}</Text>
+				<Text onPress={() => navigate('MusicPlayer', { current: item, all: songs})}>{item.music_title}</Text>
 			</View>
 		);
 	}
@@ -62,7 +55,7 @@ class GenreDetail extends Component {
 						<FlatList
 				          data={ songs }
 				          keyExtractor={item => item.music_id}
-				          renderItem={({item}) => this.list(item)}
+				          renderItem={({item}) => this.list(item, songs)}
 				        />
 					</View>
 					<View style={style.listCloser}></View>

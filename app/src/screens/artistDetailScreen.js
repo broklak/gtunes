@@ -8,6 +8,7 @@ import { fetchDetailArtist } from '../actions/artistAction';
 import { connect } from 'react-redux';
 import { IMAGE_HOST_URL } from '../../config/settings';
 import striptags from 'striptags';
+import _ from 'lodash';
 
 class ArtistDetail extends Component {
 	static navigationOptions = ({ navigation }) => ({
@@ -18,15 +19,8 @@ class ArtistDetail extends Component {
 		this.props.fetchDetailArtist(state.params.artist_id);
 	}
 
-	list(item, artist) {
+	list(item, songs) {
 		const { navigate } = this.props.navigation;
-		let params = {
-			musicId: item.music_id,
-			artistName: artist.artist_name,
-			musicArt: item.music_artwork,
-			musicTitle: item.music_title,
-			musicUrl: `${IMAGE_HOST_URL}/${item.music_url}`
-		}
 		return (
 			<View style={style.listContainer}>
 				<Entypo
@@ -34,7 +28,7 @@ class ArtistDetail extends Component {
 					size={18}
 					style={style.songIcon}
 				/>
-				<Text onPress={() => navigate('MusicPlayer', params)}>{item.music_title}</Text>
+				<Text onPress={() => navigate('MusicPlayer', { current: item, all: songs})}>{item.music_title}</Text>
 			</View>
 		);
 	}
@@ -66,7 +60,7 @@ class ArtistDetail extends Component {
 						<FlatList
 				          data={ songs }
 				          keyExtractor={item => item.music_id}
-				          renderItem={({item}) => this.list(item, artist)}
+				          renderItem={({item}) => this.list(item, songs)}
 				        />
 					</View>
 					<View style={style.listCloser}></View>

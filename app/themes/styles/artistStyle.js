@@ -18,7 +18,7 @@ export default StyleSheet.create({
   listContainer: {
   	paddingLeft: 15,
   	paddingRight: 15,
-  	marginBottom: 20,
+    marginTop: 20,
   	backgroundColor: '#fff',
   	width: 175
   },

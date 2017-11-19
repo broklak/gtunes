@@ -45,7 +45,7 @@ class NewsScreen extends Component {
 	render() {
 		return (
 			<View style={style.container}>
-				<Header navigation={this.props.navigation} />
+				<Header navigation={this.props.navigation} title="GTunes" />
 					<Text style={style.labelHeader}>What's New</Text>
 					<FlatList
 			          data={ this.props.news }

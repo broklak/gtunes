@@ -6,7 +6,8 @@ export default StyleSheet.create({
     backgroundColor: '#fff'
   },
   detailContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#fff'
   },
   labelHeader: {
   	fontSize: 20,
@@ -27,7 +28,7 @@ export default StyleSheet.create({
   	width: '99%'
   },
   imageDetailContainer: {
-    height: '30%'
+    height: '100%'
   },
   imageDetail: {
     alignSelf: 'stretch',
