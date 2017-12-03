@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, ScrollView, Dimensions } from 'react-native';
+import { View, Text, Image, FlatList, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import Header from '../components/headerComponent';
 import Entypo from 'react-native-vector-icons/Entypo';
 import style from '../../themes/styles/artistDetailStyle';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { fetchDetailArtist } from '../actions/artistAction';
+import { check } from '../actions/authAction';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { IMAGE_HOST_URL } from '../../config/settings';
 import striptags from 'striptags';
 import _ from 'lodash';
@@ -19,8 +21,25 @@ class ArtistDetail extends Component {
 		this.props.fetchDetailArtist(state.params.artist_id);
 	}
 
-	list(item, songs) {
+	playSong(item, songs) {
 		const { navigate } = this.props.navigation;
+		AsyncStorage.getItem('msisdn').then((msisdn) => {
+			if(msisdn === null) { // NO LOGIN
+				navigate('Package');
+			} else { // LOGGED IN
+				// CHECK PACKAGE
+				this.props.check(msisdn, (response) => {
+					if(response.status == 200) { // PAKET AKTIF
+						navigate('MusicPlayer', { current: item, all: songs})
+					} else { // PAKET EXPIRED / TIDAK AKTIF
+						navigate('Package');
+					}
+				});
+			}
+		});
+	}
+
+	list(item, songs) {
 		return (
 			<View style={style.listContainer}>
 				<Entypo
@@ -28,7 +47,7 @@ class ArtistDetail extends Component {
 					size={18}
 					style={style.songIcon}
 				/>
-				<Text onPress={() => navigate('MusicPlayer', { current: item, all: songs})}>{item.music_title}</Text>
+				<Text onPress={() => this.playSong(item, songs) }>{item.music_title}</Text>
 			</View>
 		);
 	}
@@ -75,5 +94,8 @@ const mapStateToProps = state => {
 	return { detailArtist: state.detailArtist }
 }
 
-export default connect(mapStateToProps, { fetchDetailArtist })(ArtistDetail);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ check, fetchDetailArtist }, dispatch);
+}
 
+export default connect(mapStateToProps, mapDispatchToProps)(ArtistDetail);

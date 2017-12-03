@@ -18,10 +18,16 @@ class PaymentSuccessScreen extends Component {
 						<Text>Terima kasih atas pembelian paket</Text>
 						<Text style={{fontWeight:'500', marginBottom:10}}>GTunes {state.params.package.paket_hari} Hari / Rp.{numeral(state.params.package.paket_tarif).format('0,0')}</Text>
 					</View>
-					<View style={{alignItems: 'center'}}>
-						<Text>Kamu bisa menikmati layanan kamu setelah</Text>
-						<Text style={{marginBottom: 20}}>menerima SMS Konfirmasi dari <Text style={{fontWeight:'500'}}> {state.params.telco}</Text></Text>
+					<View>
+						<Text>Kamu bisa menikmati layanan GTunes setelah menerima SMS Konfirmasi dari <Text style={{fontWeight:'500'}}> {state.params.telco}</Text></Text>
+						<Text style={{marginBottom: 20, marginTop: 10}}>Kamu cukup login menggunakan nomor HP kamu, password adalah 5 digit terakhir nomor HP kamu.</Text>
 					</View>
+					<Button 
+						title="Login Sekarang" 
+						onPress={() => navigate('Auth')} 
+						color="#1ab667"
+					/>
+					<View style={{marginBottom: 20}}></View>
 					<Button 
 						title="Kembali ke halaman utama" 
 						onPress={() => navigate('News')} 

@@ -5,8 +5,8 @@ export default function (state = { artist: {}, songs: [] }, action) {
 		case types.DETAIL_ARTIST:
 			return {
 				...state,
-					artist: action.payload.data.artist,
-					songs: 	action.payload.data.songs
+					artist: action.payload.data.data.artist,
+					songs: 	action.payload.data.data.songs
 			}
 		default:
 			return state;

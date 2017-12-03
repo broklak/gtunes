@@ -5,7 +5,6 @@ import style from '../../themes/styles/paymentStyle';
 import { connect } from 'react-redux';
 import { fetchListPackage } from '../actions/paymentAction';
 import numeral from 'numeral';
-import DeviceInfo from 'react-native-device-info';
 
 class PackageScreen extends Component {
 	static navigationOptions = {

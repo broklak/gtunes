@@ -11,6 +11,7 @@ import PackageScreen from '../src/screens/packageScreen';
 import PaymentOptionsScreen from '../src/screens/paymentOptionsScreen';
 import PaymentSuccessScreen from '../src/screens/paymentSuccessScreen';
 import SmartfrenScreen from '../src/screens/telco/smartfrenPaymentScreen';
+import AuthScreen from '../src/screens/authScreen';
 
 const Routes = {
 	  News: {
@@ -51,8 +52,7 @@ const Routes = {
 	  },
 	  Smartfren: {
 	    screen: SmartfrenScreen
-
-	  },
+	  }
 }
 
 export default Routes;

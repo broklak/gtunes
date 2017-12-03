@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, ScrollView, Dimensions } from 'react-native';
+import { View, Text, Image, FlatList, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import Header from '../components/headerComponent';
 import Entypo from 'react-native-vector-icons/Entypo';
 import style from '../../themes/styles/genreDetailStyle';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { fetchDetailGenre } from '../actions/genreAction';
+import { check } from '../actions/authAction';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { IMAGE_HOST_URL } from '../../config/settings';
 import striptags from 'striptags';
 
@@ -18,6 +20,24 @@ class GenreDetail extends Component {
 		this.props.fetchDetailGenre(state.params.genre_id);
 	}
 
+	playSong(item, songs) {
+		const { navigate } = this.props.navigation;
+		AsyncStorage.getItem('msisdn').then((msisdn) => {
+			if(msisdn === null) { // NO LOGIN
+				navigate('Package');
+			} else { // LOGGED IN
+				// CHECK PACKAGE
+				this.props.check(msisdn, (response) => {
+					if(response.status == 200) { // PAKET AKTIF
+						navigate('MusicPlayer', { current: item, all: songs})
+					} else { // PAKET EXPIRED / TIDAK AKTIF
+						navigate('Package');
+					}
+				});
+			}
+		});
+	}
+
 	list(item, songs) {
 		const { navigate } = this.props.navigation;
 		return (
@@ -28,7 +48,7 @@ class GenreDetail extends Component {
 					size={18}
 					style={style.songIcon}
 				/>
-				<Text onPress={() => navigate('MusicPlayer', { current: item, all: songs})}>{item.music_title}</Text>
+				<Text onPress={() => this.playSong(item, songs)}>{item.music_title}</Text>
 			</View>
 		);
 	}
@@ -70,4 +90,8 @@ const mapStateToProps = state => {
 	return { detailGenre: state.detailGenre }
 }
 
-export default connect(mapStateToProps, { fetchDetailGenre })(GenreDetail);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ check, fetchDetailGenre }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GenreDetail);

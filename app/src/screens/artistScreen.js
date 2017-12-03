@@ -6,11 +6,16 @@ import { NavigationActions } from 'react-navigation';
 import Header from '../components/headerComponent';
 import { connect } from 'react-redux';
 import { fetchListArtist } from '../actions/artistAction';
+import { CachedImage } from "react-native-img-cache";
 
 class ArtistScreen extends Component {
 	static navigationOptions = {
 	   header: null
 	};
+
+	setNativeProps = (nativeProps) => {
+	    this._root.setNativeProps(nativeProps);
+	 }
 	
 	componentDidMount() {
 		this.props.fetchListArtist();
@@ -19,15 +24,18 @@ class ArtistScreen extends Component {
 	list(item) {
 		const { navigate } = this.props.navigation;
 		return (
-			<View style={style.listContainer}>
-				<TouchableHighlight onPress={() => navigate('ArtistDetail', item)}>
-					<Image 
+			<TouchableHighlight  onPress={() => navigate('ArtistDetail', item)}>
+			<View 
+				style={style.listContainer}
+				ref={component => this._root = component} {...this.props}
+			>
+					<CachedImage
 						style={style.image} 
 						source={{uri:`${IMAGE_HOST_URL}/${item.artist_image}`}}
 					/>
-				</TouchableHighlight>
-				<Text onPress={() => navigate('ArtistDetail', item)} style={style.title}>{item.artist_name}</Text>
+				<Text style={style.title}>{item.artist_name}</Text>
 			</View>
+			</TouchableHighlight>
 		);
 	}
 

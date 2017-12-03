@@ -5,7 +5,7 @@ export default function (state = { list: [] }, action) {
 		case types.LIST_GENRE:
 			return {
 				...state,
-					list: (action.payload.data) ? action.payload.data : state.list
+					list: (action.payload.data.data) ? action.payload.data.data : state.list
 			}
 		default:
 			return state;

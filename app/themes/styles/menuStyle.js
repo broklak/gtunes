@@ -33,6 +33,7 @@ export default StyleSheet.create({
 	},
 	loginButton: {
 		fontSize: 12,
-		marginBottom: 10	
+		marginBottom: 10,	
+		marginTop: 5
 	}
 });

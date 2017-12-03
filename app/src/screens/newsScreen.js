@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, FlatList, Alert, TouchableHighlight } from 'react-native';
+import { Text, View, Image, FlatList, Alert, TouchableHighlight, AsyncStorage } from 'react-native';
 import style from '../../themes/styles/newsStyle';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { IMAGE_HOST_URL } from '../../config/settings';
@@ -14,6 +14,11 @@ class NewsScreen extends Component {
 	};
 	
 	componentDidMount() {
+		const { state, navigate } = this.props.navigation;
+
+		if(state.params) {
+			navigate('DrawerOpen');
+		}
 		this.props.fetchListNews();
 	}
 
