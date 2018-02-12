@@ -10,11 +10,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { IMAGE_HOST_URL } from '../../config/settings';
 import striptags from 'striptags';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class GenreDetail extends Component {
 	static navigationOptions = ({ navigation }) => ({
 	    title: `${navigation.state.params.genre_name}`
 	  });
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			loading: false
+		}
+	}
+
 	componentDidMount() {
 		const { state } = this.props.navigation;
 		this.props.fetchDetailGenre(state.params.genre_id);
@@ -27,10 +37,13 @@ class GenreDetail extends Component {
 				navigate('Package');
 			} else { // LOGGED IN
 				// CHECK PACKAGE
+				this.setState({"loading":true});
 				this.props.check(msisdn, (response) => {
 					if(response.status == 200) { // PAKET AKTIF
-						navigate('MusicPlayer', { current: item, all: songs})
+						this.setState({"loading":false});
+						navigate('MusicPlayer', { current: item, all: songs, user: msisdn})
 					} else { // PAKET EXPIRED / TIDAK AKTIF
+						this.setState({"loading":false});
 						navigate('Package');
 					}
 				});
@@ -54,6 +67,18 @@ class GenreDetail extends Component {
 	}
 
 	render() {
+		if(this.state.loading) {
+			return (
+				<View style={{ flex: 1 }}>
+					<Spinner 
+						visible={this.state.loading}
+						textContent={"Loading..."}
+						textStyle={{color: '#1ab667'}}
+						color="#1ab667" 
+					/>
+				</View>
+			)
+		}
 		const { height } = Dimensions.get('window');
 		const headerHeight = Math.ceil(height * 40 / 100);
 		if(this.props.detailGenre) {

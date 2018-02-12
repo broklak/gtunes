@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, AsyncStorage } from 'react-native';
+import { View, Text, Image, AsyncStorage ,TouchableHighlight} from 'react-native';
 import style from '../../themes/styles/menuStyle';
 import { NavigationActions } from 'react-navigation';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -83,11 +83,13 @@ class CustomMenu extends Component {
 			);
 		} else {
 			return (
-				<View style={style.header}>
-					<Image style={style.userImage} source={images.noLogin} />
-					<Text style={style.loginHeader}>Kamu belum login</Text>
-					<Text onPress={this.navigateToScreen('Auth')} style={style.loginButton}>Klik untuk login</Text>
-				</View>
+				<TouchableHighlight onPress={this.navigateToScreen('Auth')}>
+					<View onPress={this.navigateToScreen('Auth')} style={style.header}>
+						<Image style={style.userImage} source={images.noLogin} />
+						<Text style={style.loginHeader}>Kamu belum login</Text>
+						<Text style={style.loginButton}>Klik untuk login</Text>
+					</View>
+				</TouchableHighlight>
 			);
 		}
 

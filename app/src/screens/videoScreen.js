@@ -7,11 +7,20 @@ import { connect } from 'react-redux';
 import { fetchListVideos } from '../actions/videoAction';
 import { check } from '../actions/authAction';
 import { bindActionCreators } from 'redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class VideoScreen extends Component {
 	static navigationOptions = {
 	   header: null
 	};
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			loading: false
+		}
+	}
 
 	componentDidMount() {
 		this.props.fetchListVideos();
@@ -24,10 +33,13 @@ class VideoScreen extends Component {
 				navigate('Package');
 			} else { // LOGGED IN
 				// CHECK PACKAGE
+				this.setState({"loading":true});
 				this.props.check(msisdn, (response) => {
 					if(response.status == 200) { // PAKET AKTIF
-						navigate('VideoPlayer', {url: item.video_clip_url})
+						this.setState({"loading":false});
+						navigate('VideoPlayer', {video: item, user: msisdn})
 					} else { // PAKET EXPIRED / TIDAK AKTIF
+						this.setState({"loading":false});
 						navigate('Package');
 					}
 				});
@@ -48,6 +60,18 @@ class VideoScreen extends Component {
 	}
 
 	render() {
+		if(this.state.loading) {
+			return (
+				<View style={{ flex: 1 }}>
+					<Spinner 
+						visible={this.state.loading}
+						textContent={"Loading..."}
+						textStyle={{color: '#1ab667'}}
+						color="#1ab667" 
+					/>
+				</View>
+			)
+		}
 		return (
 			<View style={style.container}>
 				<Header navigation={this.props.navigation} title="Video Clip" />

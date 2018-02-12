@@ -4,16 +4,10 @@ import { API_HOST_URL } from '../../config/settings';
 export const LOGIN = 'login';
 export const CHECK = 'check';
 
-export const login = (username, password, callback) => {
+export const login = (username, password, callback, error) => {
 	let request = axios.post(`${API_HOST_URL}/login`, { username, password })
 						.then(callback)
-						.catch((error) => {
-							if(error.response.data.error.userMsg) {
-								alert(error.response.data.error.userMsg);
-							} else {
-								alert(error);
-							}
-						});
+						.catch(error);
 	
 	return {
 		type: LOGIN,
@@ -21,12 +15,10 @@ export const login = (username, password, callback) => {
 	}
 }
 
-export const check = (msisdn, callback) => {
+export const check = (msisdn, callback, error) => {
 	let request = axios.get(`${API_HOST_URL}/check-package/${msisdn}`)
 						.then(callback)
-						.catch((error) => {
-							alert(error)
-						});
+						.catch(error);
 	
 	return {
 		type: CHECK,

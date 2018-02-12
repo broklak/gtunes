@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Video from 'react-native-video';
 import style from '../../themes/styles/videoPlayerStyle';
-import { Bubbles } from 'react-native-loader';
 import { IMAGE_HOST_URL } from '../../config/settings';
+import { store } from '../libraries/behaviour';
 
 class VideoPlayerScreen extends Component {
 	static navigationOptions = {
@@ -14,6 +14,27 @@ class VideoPlayerScreen extends Component {
 		super(props);
 		this.state = {
 			loading: false
+		}
+	}
+
+	componentDidMount() {
+		let params = this.behaviourParams('play');
+		store(params);
+	}
+
+	componentWillUnmount() {
+		let params = this.behaviourParams('stop');
+		store(params);
+	}
+
+	behaviourParams(activity) {
+		const { state } = this.props.navigation;
+		return {
+			type		: 'video',
+			activity	: activity,
+			content		: state.params.video.video_clip_id,
+			artist		: null,
+			user		: state.params.user
 		}
 	}
 
@@ -28,7 +49,7 @@ class VideoPlayerScreen extends Component {
 	render() {
 		const { state } = this.props.navigation;
 		return(
-				<Video source={{uri: `${IMAGE_HOST_URL}/${encodeURI(state.params.url)}`}}
+				<Video source={{uri: `${IMAGE_HOST_URL}/${encodeURI(state.params.video.video_clip_url)}`}}
 					ref={(ref) => {
 			         this.player = ref
 			       }}                                      // Store reference 

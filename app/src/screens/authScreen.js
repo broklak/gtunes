@@ -4,7 +4,8 @@ import style from '../../themes/styles/authStyle';
 import images from '../../themes/settings/images';
 import { connect } from 'react-redux';
 import { login } from '../actions/authAction';
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class AuthScreen extends Component {
 	static navigationOptions = {
@@ -18,13 +19,14 @@ class AuthScreen extends Component {
 			screenType: "login",
 			username: null,
 			password: null,
+			loading: false
 		}
 	}
 
 	onSubmit() {
 		let { username , password } = this.state;
 		const { navigate, setParams } = this.props.navigation;
-
+		this.setState({"loading":true});
 		this.props.login(username, password, (response) => {
 			if(response.status == 200) {
 				const { package_name, msisdn, random_key } = response.data.data;
@@ -39,16 +41,43 @@ class AuthScreen extends Component {
 				  	});
 
 				} catch (error) {
+					this.setState({"loading":false});
 				  	alert("Failed to save your login data");
 				}
+			} else if(response.status != 200) {
+				this.setState({"loading":false});
+				alert(""+response.data.error.userMsg);
 			} else {
+				this.setState({"loading":false});
 				alert("Failed to login");
 			}
-		})
+		}, (error) => {
+				if(error.response.data.error.userMsg) {
+					this.setState({"loading":false});
+					alert(error.response.data.error.userMsg);
+				} else {
+					this.setState({"loading":false});
+					alert(error);
+				}
+			});
 	}
 
 	render() {
 		const { navigate } = this.props.navigation;
+
+		if(this.state.loading) {
+			return (
+				<View style={{ flex: 1 }}>
+					<Spinner 
+						visible={this.state.loading}
+						textContent={"Loading..."}
+						textStyle={{color: '#1ab667'}}
+						color="#1ab667" 
+					/>
+				</View>
+			)
+		}
+
 		return (
 			<View style={style.container}>
 				<View style={style.componentGroup}>

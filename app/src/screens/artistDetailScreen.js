@@ -11,8 +11,17 @@ import { bindActionCreators } from 'redux';
 import { IMAGE_HOST_URL } from '../../config/settings';
 import striptags from 'striptags';
 import _ from 'lodash';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class ArtistDetail extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			loading: false
+		}
+	}
+
 	static navigationOptions = ({ navigation }) => ({
 	    title: `${navigation.state.params.artist_name}`
 	  });
@@ -28,10 +37,13 @@ class ArtistDetail extends Component {
 				navigate('Package');
 			} else { // LOGGED IN
 				// CHECK PACKAGE
+				this.setState({"loading":true});
 				this.props.check(msisdn, (response) => {
 					if(response.status == 200) { // PAKET AKTIF
-						navigate('MusicPlayer', { current: item, all: songs})
+						this.setState({"loading":false});
+						navigate('MusicPlayer', { current: item, all: songs, user: msisdn })
 					} else { // PAKET EXPIRED / TIDAK AKTIF
+						this.setState({"loading":false});
 						navigate('Package');
 					}
 				});
@@ -53,6 +65,18 @@ class ArtistDetail extends Component {
 	}
 
 	render() {
+		if(this.state.loading) {
+			return (
+				<View style={{ flex: 1 }}>
+					<Spinner 
+						visible={this.state.loading}
+						textContent={"Loading..."}
+						textStyle={{color: '#1ab667'}}
+						color="#1ab667" 
+					/>
+				</View>
+			)
+		}
 		const { height } = Dimensions.get('window');
 		const headerHeight = Math.ceil(height * 40 / 100);
 		if(this.props.detailArtist) {
